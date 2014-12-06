@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:h="http://java.sun.com/jsf/html"
+                template="/WEB-INF/templates/template.xhtml"
+                xmlns:p="http://primefaces.org/ui">
+
+    <ui:define name="content">
+
+
+        <h:form>
+
+            <h:panelGrid columns="2" cellpadding="5"> ,
+
+
+                <h:outputLabel for="email" value="Username:"/>
+                <p:inputText id="email" value="#{userController.user.email}" required="true" label="username"/>
+
+
+                <h:outputLabel for="active" value="Username:"/>
+                <p:inputText id="active" value="#{userController.user.active}" required="true" label="active"/>
+
+
+                <h:outputLabel for="userType" value="Username:"/>
+                <p:inputText id="userType" value="#{userController.user.userType}" required="true" label="userType"/>
+
+                <h:outputLabel for="password" value="Password:"/>
+                <p:password id="password" value="#{userController.user.password}" required="true" label="password"/>
+
+                <f:facet name="footer">
+                    <p:commandButton value="Login" actionListener="#{userController.addUser}"
+                            />
+                </f:facet>
+            </h:panelGrid>
+        </h:form>
+
+        <p:dataTable var="user" value="#{userController.users}">
+            <p:column headerText="Users">
+                <h:outputText value="#{user.userId}"/> -
+            </p:column>
+        </p:dataTable>
+
+    </ui:define>
+</ui:composition>
