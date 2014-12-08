@@ -11,7 +11,6 @@ import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
-import java.util.List;
 
 /**
  * User: SametCokpinar
@@ -26,11 +25,17 @@ public class UserRestWS {
     private UserService userService;
 
 
+//    @GET
+//    @Produces({MediaType.APPLICATION_JSON}
+//    )
+//    public List<User> getAllUsers() {
+//        return userService.findAllUsers();
+//    }
+
     @GET
-    @Produces({MediaType.APPLICATION_JSON}
-    )
-    public List<User> getAllUsers() {
-        return userService.findAllUsers();
+    @Produces({MediaType.TEXT_HTML})
+    public String getAllUsers() {
+        return "Rest working";
     }
 
     /*@POST
