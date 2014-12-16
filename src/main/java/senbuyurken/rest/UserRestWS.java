@@ -38,6 +38,7 @@ public class UserRestWS {
 
     @POST
     @Path("/createUser")
+    @Produces("application/json")
     @Transactional
     public Response createUserFromForm(
             @FormParam("email") String email,
@@ -48,7 +49,7 @@ public class UserRestWS {
         User user = new User(email, password, active, userType);
         User u = userService.create(user);
         String output = u.toString();
-        return Response.status(200).entity(output).build();
+        return Response.status(200).entity(u).build();
 
     }
 
