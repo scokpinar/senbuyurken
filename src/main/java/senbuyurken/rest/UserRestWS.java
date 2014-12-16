@@ -2,13 +2,11 @@ package senbuyurken.rest;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+import org.springframework.transaction.annotation.Transactional;
 import senbuyurken.entities.User;
 import senbuyurken.services.UserService;
 
-import javax.ws.rs.GET;
-import javax.ws.rs.POST;
-import javax.ws.rs.Path;
-import javax.ws.rs.Produces;
+import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
@@ -38,31 +36,18 @@ public class UserRestWS {
         return "Rest working";
     }
 
-    /*@POST
-    @Consumes(MediaType.APPLICATION_JSON)
-    @Produces({MediaType.TEXT_HTML})
+    @POST
     @Transactional
     public Response createUserFromForm(
             @FormParam("email") String email,
             @FormParam("password") String password,
             @FormParam("active") String active,
             @FormParam("userType") String userType
-            ) {
-        User user = new User(email,password);
-
-
-        User u = userService. create(user);
-
-        return Response.status(201).entity("A new user has been created").build();
-    }*/
-
-    @POST
-    public Response createUserFromForm(User user) {
-
-
+    ) {
+        User user = new User(email, password, active, userType);
         User u = userService.create(user);
-
-        return Response.status(201).entity("A new user has been created").build();
+        String output = u.toString();
+        return Response.status(200).entity(output).build();
 
     }
 

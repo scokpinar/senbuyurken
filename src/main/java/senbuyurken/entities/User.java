@@ -38,20 +38,24 @@ public class User implements Serializable {
 
 
     @NotNull
+    @Size(min = 1, max = 1)
     @Column(name = "active")
-    private Character active;
+    private String active;
 
     @NotNull
+    @Size(min = 1, max = 1)
     @Column(name = "usertype")
-    private Character userType;
+    private String userType;
 
 
     public User() {
     }
 
-    public User(String email, String password) {
+    public User(String email, String password, String active, String userType) {
         this.email = email;
         this.password = password;
+        this.active = active;
+        this.userType = userType;
     }
 
     public Integer getUserId() {
@@ -78,19 +82,30 @@ public class User implements Serializable {
         this.password = password;
     }
 
-    public Character getActive() {
+    public String getActive() {
         return active;
     }
 
-    public void setActive(Character active) {
+    public void setActive(String active) {
         this.active = active;
     }
 
-    public Character getUserType() {
+    public String getUserType() {
         return userType;
     }
 
-    public void setUserType(Character userType) {
+    public void setUserType(String userType) {
         this.userType = userType;
+    }
+
+    @Override
+    public String toString() {
+        return "User{" +
+                "userId=" + userId +
+                ", email='" + email + '\'' +
+                ", password='" + password + '\'' +
+                ", active='" + active + '\'' +
+                ", userType='" + userType + '\'' +
+                '}';
     }
 }
