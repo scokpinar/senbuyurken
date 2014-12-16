@@ -37,6 +37,7 @@ public class UserRestWS {
     }
 
     @POST
+    @Path("/createUser")
     @Transactional
     public Response createUserFromForm(
             @FormParam("email") String email,
