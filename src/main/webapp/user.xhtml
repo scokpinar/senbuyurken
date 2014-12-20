@@ -8,32 +8,47 @@
 
     <ui:define name="content">
 
-
-        <h:form>
-
-            <h:panelGrid columns="2" cellpadding="5"> ,
+        <form action="rest/userRestWS/createUser" method="post">
 
 
-                <h:outputLabel for="email" value="Username:"/>
-                <p:inputText id="email" value="#{userController.user.email}" required="true" label="username"/>
+            <h:panelGrid columns="2" cellpadding="5">
+
+
+                <h:outputLabel for="name" value="name:"/>
+                <p:inputText id="name" name="name" required="true" label="name"/>
+
+
+                <h:outputLabel for="surname" value="surname:"/>
+                <p:inputText id="surname" name="surname" required="true" label="surname"/>
+
+                <h:outputLabel for="gender" value="gender:"/>
+                <p:inputText id="gender" name="gender" required="true" label="gender"/>
+
+                <h:outputLabel for="birthDate" value="birthDate:"/>
+                <p:inputText id="birthDate" name="birthDate" required="true" label="birthDate"/>
+
+                <h:outputLabel for="email" value="email:"/>
+                <p:inputText id="email" name="email" required="true" label="email"/>
+
+                <h:outputLabel for="password" value="Password:"/>
+                <p:password id="password" name="password" required="true" label="password"/>
 
 
                 <h:outputLabel for="active" value="Username:"/>
-                <p:inputText id="active" value="#{userController.user.active}" required="true" label="active"/>
+                <p:inputText id="active" name="active" required="true" label="active"/>
 
 
                 <h:outputLabel for="userType" value="Username:"/>
-                <p:inputText id="userType" value="#{userController.user.userType}" required="true" label="userType"/>
+                <p:inputText id="userType" name="userType" required="true" label="userType"/>
 
                 <h:outputLabel for="password" value="Password:"/>
-                <p:password id="password" value="#{userController.user.password}" required="true" label="password"/>
+                <p:password id="password" name="password" required="true" label="password"/>
 
                 <f:facet name="footer">
-                    <p:commandButton value="Login" actionListener="#{userController.addUser}"
-                            />
+                    <p:commandButton value="Login"/>
                 </f:facet>
             </h:panelGrid>
-        </h:form>
+        </form>
 
         <p:dataTable var="user" value="#{userController.users}">
             <p:column headerText="Users">

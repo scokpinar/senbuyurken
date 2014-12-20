@@ -2,15 +2,19 @@ package senbuyurken.rest;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+import org.springframework.transaction.annotation.Transactional;
+import senbuyurken.entities.BabyInfo;
 import senbuyurken.entities.User;
+import senbuyurken.services.BabyInfoService;
 import senbuyurken.services.UserService;
 
-import javax.ws.rs.GET;
-import javax.ws.rs.POST;
-import javax.ws.rs.Path;
-import javax.ws.rs.Produces;
+import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 /**
  * User: SametCokpinar
@@ -23,6 +27,9 @@ public class UserRestWS {
 
     @Autowired
     private UserService userService;
+
+    @Autowired
+    private BabyInfoService babyInfoService;
 
 
 //    @GET
@@ -38,31 +45,40 @@ public class UserRestWS {
         return "Rest working";
     }
 
-    /*@POST
-    @Consumes(MediaType.APPLICATION_JSON)
-    @Produces({MediaType.TEXT_HTML})
+    @POST
+    @Path("/createUser")
+    @Produces({MediaType.APPLICATION_JSON})
     @Transactional
     public Response createUserFromForm(
+            @FormParam("name") String name,
+            @FormParam("surname") String surname,
+            @FormParam("gender") String gender,
+            @FormParam("birthDate") String birthDate,
             @FormParam("email") String email,
             @FormParam("password") String password,
             @FormParam("active") String active,
             @FormParam("userType") String userType
-            ) {
-        User user = new User(email,password);
+    ) {
 
 
-        User u = userService. create(user);
-
-        return Response.status(201).entity("A new user has been created").build();
-    }*/
-
-    @POST
-    public Response createUserFromForm(User user) {
-
-
+        User user = new User(email, password, active, userType);
         User u = userService.create(user);
 
-        return Response.status(201).entity("A new user has been created").build();
+        BabyInfo babyInfo = new BabyInfo();
+        babyInfo.setUser(u);
+        babyInfo.setName(name);
+        babyInfo.setSurname(surname);
+        babyInfo.setGender(gender);
+        try {
+            DateFormat format = new SimpleDateFormat("dd.MM.yyyy");
+            Date date = format.parse(birthDate);
+            babyInfo.setBirthDate(date);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        babyInfoService.create(babyInfo);
+
+        return Response.status(200).entity(u).build();
 
     }
 
@@ -73,5 +89,13 @@ public class UserRestWS {
 
     public void setUserService(UserService userService) {
         this.userService = userService;
+    }
+
+    public BabyInfoService getBabyInfoService() {
+        return babyInfoService;
+    }
+
+    public void setBabyInfoService(BabyInfoService babyInfoService) {
+        this.babyInfoService = babyInfoService;
     }
 }
