@@ -22,9 +22,13 @@ import java.io.Serializable;
 public class User implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
+
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "user_id")
     private Integer userId;
+
+    @OneToOne(fetch = FetchType.LAZY, mappedBy = "user")
+    private BabyInfo babyInfo;
 
     @NotNull
     @Size(max = 128)
@@ -64,6 +68,14 @@ public class User implements Serializable {
 
     public void setUserId(Integer userId) {
         this.userId = userId;
+    }
+
+    public BabyInfo getBabyInfo() {
+        return babyInfo;
+    }
+
+    public void setBabyInfo(BabyInfo babyInfo) {
+        this.babyInfo = babyInfo;
     }
 
     public String getEmail() {
@@ -108,4 +120,6 @@ public class User implements Serializable {
                 ", userType='" + userType + '\'' +
                 '}';
     }
+
+
 }
