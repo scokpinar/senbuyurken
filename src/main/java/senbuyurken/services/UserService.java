@@ -28,4 +28,7 @@ public class UserService {
         return userRepository.save(user);
     }
 
+    public Boolean checkUser(String email) {
+        return userRepository.findByEmailAddress(email) == null;
+    }
 }

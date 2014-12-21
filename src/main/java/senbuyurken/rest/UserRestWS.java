@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 import senbuyurken.entities.BabyInfo;
+import senbuyurken.entities.JSONResult;
 import senbuyurken.entities.User;
 import senbuyurken.services.BabyInfoService;
 import senbuyurken.services.UserService;
@@ -27,7 +28,6 @@ public class UserRestWS {
 
     @Autowired
     private UserService userService;
-
     @Autowired
     private BabyInfoService babyInfoService;
 
@@ -40,8 +40,9 @@ public class UserRestWS {
 //    }
 
     @GET
+    @Path("/checkRestService")
     @Produces({MediaType.TEXT_HTML})
-    public String getAllUsers() {
+    public String checkRestService() {
         return "Rest working";
     }
 
@@ -60,28 +61,33 @@ public class UserRestWS {
             @FormParam("userType") String userType
     ) {
 
+        JSONResult result = new JSONResult(false);
 
-        User user = new User(email, password, active, userType);
-        User u = userService.create(user);
+        if (userService.checkUser(email)) {
 
-        BabyInfo babyInfo = new BabyInfo();
-        babyInfo.setUser(u);
-        babyInfo.setName(name);
-        babyInfo.setSurname(surname);
-        babyInfo.setGender(gender);
-        try {
-            DateFormat format = new SimpleDateFormat("dd.MM.yyyy");
-            Date date = format.parse(birthDate);
-            babyInfo.setBirthDate(date);
-        } catch (ParseException e) {
-            e.printStackTrace();
+            User user = new User(email, password, active, userType);
+            User u = userService.create(user);
+
+            BabyInfo babyInfo = new BabyInfo();
+            babyInfo.setUser(u);
+            babyInfo.setName(name);
+            babyInfo.setSurname(surname);
+            babyInfo.setGender(gender);
+            try {
+                DateFormat format = new SimpleDateFormat("dd.MM.yyyy");
+                Date date = format.parse(birthDate);
+                babyInfo.setBirthDate(date);
+            } catch (ParseException e) {
+                e.printStackTrace();
+            }
+            babyInfoService.create(babyInfo);
+
+            result.setResult(true);
+            return Response.status(200).entity(result).build();
+
         }
-        babyInfoService.create(babyInfo);
-
-        return Response.status(200).entity(u).build();
-
+        return Response.status(200).entity(result).build();
     }
-
 
     public UserService getUserService() {
         return userService;
