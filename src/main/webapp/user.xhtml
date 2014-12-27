@@ -24,8 +24,8 @@
                 <h:outputLabel for="gender" value="gender:"/>
                 <p:inputText id="gender" name="gender" required="true" label="gender"/>
 
-                <h:outputLabel for="birthDate" value="birthDate:"/>
-                <p:inputText id="birthDate" name="birthDate" required="true" label="birthDate"/>
+                <h:outputLabel for="birth_date" value="birthDate:"/>
+                <p:inputText id="birth_date" name="birth_date" required="true" label="birthDate"/>
 
                 <h:outputLabel for="email" value="email:"/>
                 <p:inputText id="email" name="email" required="true" label="email"/>
@@ -33,16 +33,15 @@
                 <h:outputLabel for="password" value="Password:"/>
                 <p:password id="password" name="password" required="true" label="password"/>
 
+                <h:outputLabel for="password2" value="Password (Again):"/>
+                <p:password id="password2" name="password" required="true" label="password"/>
 
-                <h:outputLabel for="active" value="Username:"/>
+                <h:outputLabel for="active" value="Active:"/>
                 <p:inputText id="active" name="active" required="true" label="active"/>
 
+                <h:outputLabel for="user_type" value="Usertype:"/>
+                <p:inputText id="user_type" name="user_type" required="true" label="user_type"/>
 
-                <h:outputLabel for="userType" value="Username:"/>
-                <p:inputText id="userType" name="userType" required="true" label="userType"/>
-
-                <h:outputLabel for="password" value="Password:"/>
-                <p:password id="password" name="password" required="true" label="password"/>
 
                 <f:facet name="footer">
                     <p:commandButton value="Login"/>
@@ -52,7 +51,7 @@
 
         <p:dataTable var="user" value="#{userController.users}">
             <p:column headerText="Users">
-                <h:outputText value="#{user.userId}"/> -
+                <h:outputText value="#{user.userId} - #{user.email}"/>
             </p:column>
         </p:dataTable>
 

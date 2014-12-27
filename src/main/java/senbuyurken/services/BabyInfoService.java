@@ -24,7 +24,7 @@ public class BabyInfoService {
         return babyInfoRepository.findAll();
     }
 
-    public BabyInfo create(BabyInfo babyInfo) {
+    public BabyInfo save(BabyInfo babyInfo) {
         return babyInfoRepository.save(babyInfo);
     }
 

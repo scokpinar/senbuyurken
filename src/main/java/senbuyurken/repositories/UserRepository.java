@@ -9,7 +9,9 @@ import org.springframework.data.repository.query.Param;
 import senbuyurken.entities.User;
 
 /**
- * @author Siva
+ * User: SametCokpinar
+ * Date: 20/12/14
+ * Time: 21:00
  */
 public interface UserRepository extends JpaRepository<User, Integer> {
 

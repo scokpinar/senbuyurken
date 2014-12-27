@@ -10,14 +10,16 @@ import javax.xml.bind.annotation.XmlRootElement;
 import java.io.Serializable;
 
 /**
- * @author Siva
+ * User: SametCokpinar
+ * Date: 17/12/14
+ * Time: 23:08
  */
 @Entity
 @Table(name = "user")
 @XmlRootElement
 @NamedQueries({
         @NamedQuery(name = "User.findAll", query = "SELECT u FROM User u"),
-        @NamedQuery(name = "User.findByUserId", query = "SELECT u FROM User u WHERE u.userId = :userId")
+        @NamedQuery(name = "User.findByUserId", query = "SELECT u FROM User u WHERE u.user_id = :user_id")
 })
 public class User implements Serializable {
     private static final long serialVersionUID = 1L;
@@ -25,10 +27,10 @@ public class User implements Serializable {
 
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "user_id")
-    private Integer userId;
+    private Integer user_id;
 
     @OneToOne(fetch = FetchType.LAZY, mappedBy = "user")
-    private BabyInfo babyInfo;
+    private BabyInfo baby_info;
 
     @NotNull
     @Size(max = 128)
@@ -40,7 +42,6 @@ public class User implements Serializable {
     @Column(name = "password")
     private String password;
 
-
     @NotNull
     @Size(min = 1, max = 1)
     @Column(name = "active")
@@ -48,8 +49,8 @@ public class User implements Serializable {
 
     @NotNull
     @Size(min = 1, max = 1)
-    @Column(name = "usertype")
-    private String userType;
+    @Column(name = "user_type")
+    private String user_type;
 
 
     public User() {
@@ -59,23 +60,23 @@ public class User implements Serializable {
         this.email = email;
         this.password = password;
         this.active = active;
-        this.userType = userType;
+        this.user_type = userType;
     }
 
     public Integer getUserId() {
-        return userId;
+        return user_id;
     }
 
     public void setUserId(Integer userId) {
-        this.userId = userId;
+        this.user_id = userId;
     }
 
     public BabyInfo getBabyInfo() {
-        return babyInfo;
+        return baby_info;
     }
 
-    public void setBabyInfo(BabyInfo babyInfo) {
-        this.babyInfo = babyInfo;
+    public void setBabyInfo(BabyInfo baby_info) {
+        this.baby_info = baby_info;
     }
 
     public String getEmail() {
@@ -103,21 +104,21 @@ public class User implements Serializable {
     }
 
     public String getUserType() {
-        return userType;
+        return user_type;
     }
 
-    public void setUserType(String userType) {
-        this.userType = userType;
+    public void setUserType(String user_type) {
+        this.user_type = user_type;
     }
 
     @Override
     public String toString() {
         return "User{" +
-                "userId=" + userId +
+                "user_id=" + user_id +
                 ", email='" + email + '\'' +
                 ", password='" + password + '\'' +
                 ", active='" + active + '\'' +
-                ", userType='" + userType + '\'' +
+                ", user_type='" + user_type + '\'' +
                 '}';
     }
 

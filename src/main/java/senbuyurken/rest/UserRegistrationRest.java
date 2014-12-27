@@ -23,8 +23,8 @@ import java.util.Date;
  * Time: 23:03
  */
 @Component
-@Path("/userRestWS")
-public class UserRestWS {
+@Path("/userRegistrationRest")
+public class UserRegistrationRest {
 
     @Autowired
     private UserService userService;
@@ -40,7 +40,7 @@ public class UserRestWS {
 //    }
 
     @GET
-    @Path("/checkRestService")
+    @Path("/checkService")
     @Produces({MediaType.TEXT_HTML})
     public String checkRestService() {
         return "Rest working";
@@ -54,19 +54,19 @@ public class UserRestWS {
             @FormParam("name") String name,
             @FormParam("surname") String surname,
             @FormParam("gender") String gender,
-            @FormParam("birthDate") String birthDate,
+            @FormParam("birth_date") String birth_date,
             @FormParam("email") String email,
             @FormParam("password") String password,
             @FormParam("active") String active,
-            @FormParam("userType") String userType
+            @FormParam("user_type") String user_type
     ) {
 
         JSONResult result = new JSONResult(false);
 
         if (userService.checkUser(email)) {
 
-            User user = new User(email, password, active, userType);
-            User u = userService.create(user);
+            User user = new User(email, password, active, user_type);
+            User u = userService.save(user);
 
             BabyInfo babyInfo = new BabyInfo();
             babyInfo.setUser(u);
@@ -75,12 +75,12 @@ public class UserRestWS {
             babyInfo.setGender(gender);
             try {
                 DateFormat format = new SimpleDateFormat("dd.MM.yyyy");
-                Date date = format.parse(birthDate);
+                Date date = format.parse(birth_date);
                 babyInfo.setBirthDate(date);
             } catch (ParseException e) {
                 e.printStackTrace();
             }
-            babyInfoService.create(babyInfo);
+            babyInfoService.save(babyInfo);
 
             result.setResult(true);
             return Response.status(200).entity(result).build();
