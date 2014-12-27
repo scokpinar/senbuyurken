@@ -40,10 +40,10 @@ public class UserRegistrationRest {
 //    }
 
     @GET
-    @Path("/checkService")
+    @Path("/checkURRService")
     @Produces({MediaType.TEXT_HTML})
     public String checkRestService() {
-        return "Rest working";
+        return "Rest URR working";
     }
 
     @POST

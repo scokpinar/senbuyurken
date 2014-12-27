@@ -7,10 +7,7 @@ import senbuyurken.entities.DiaryEntry;
 import senbuyurken.entities.JSONResult;
 import senbuyurken.services.DiaryEntryService;
 
-import javax.ws.rs.FormParam;
-import javax.ws.rs.POST;
-import javax.ws.rs.Path;
-import javax.ws.rs.Produces;
+import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import java.util.GregorianCalendar;
@@ -27,6 +24,13 @@ public class DiaryEntryRest {
     @Autowired
     private DiaryEntryService diaryEntryService;
 
+
+    @GET
+    @Path("/checkDERService")
+    @Produces({MediaType.TEXT_HTML})
+    public String checkRestService() {
+        return "Rest DER working";
+    }
 
     @POST
     @Path("/createDiaryEntry")
