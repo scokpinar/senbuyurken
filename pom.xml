@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+<project xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://maven.apache.org/POM/4.0.0"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
     <modelVersion>4.0.0</modelVersion>
     <groupId>senbuyurken</groupId>
@@ -8,7 +8,7 @@
     <version>1.0-SNAPSHOT</version>
     <name>quickstart-web-app Maven Webapp</name>
 
-    <url>http://sivalabs.blogspot.in</url>
+    <url>http://www.senbuyurken.com</url>
     <description>A Maven project using Spring 3.1.x, JSF2(PrimeFaces), JPA2(Hibernate) and Log4j/Logback
         configuration.
     </description>
@@ -21,8 +21,8 @@
         <logback.version>1.0.1</logback.version>
         <log4j.version>1.2.14</log4j.version>
 
-        <spring.version>3.1.0.RELEASE</spring.version>
-        <spring.data.jpa.version>1.1.0.RELEASE</spring.data.jpa.version>
+        <spring.version>4.1.3.RELEASE</spring.version>
+        <spring.data.jpa.version>1.7.1.RELEASE</spring.data.jpa.version>
 
         <validation.version>1.0.0.GA</validation.version>
         <hibernate.version>4.1.7.Final</hibernate.version>
@@ -30,11 +30,13 @@
 
         <aspectj.version>1.6.8</aspectj.version>
         <cglib.version>2.2</cglib.version>
-        <mysql.version>5.1.19</mysql.version>
+        <mysql.version>5.1.32</mysql.version>
 
         <commons.dbcp.version>1.4</commons.dbcp.version>
         <commons.pool.version>1.6</commons.pool.version>
-        <commons.lang.version>2.5</commons.lang.version>
+        <commons.lang.version>3.3.2</commons.lang.version>
+        <commons.fileupload.version>1.2.1</commons.fileupload.version>
+        <commons.io.version>1.3.2</commons.io.version>
 
         <jsf.version>2.1.10</jsf.version>
         <primefaces.version>3.4</primefaces.version>
@@ -236,12 +238,6 @@
             <artifactId>spring-tx</artifactId>
             <version>${spring.version}</version>
         </dependency>
-
-        <dependency>
-            <groupId>org.springframework</groupId>
-            <artifactId>spring-asm</artifactId>
-            <version>${spring.version}</version>
-        </dependency>
         <dependency>
             <groupId>org.springframework</groupId>
             <artifactId>spring-aspects</artifactId>
@@ -372,8 +368,8 @@
         </dependency>
 
         <dependency>
-            <groupId>commons-lang</groupId>
-            <artifactId>commons-lang</artifactId>
+            <groupId>org.apache.commons</groupId>
+            <artifactId>commons-lang3</artifactId>
             <version>${commons.lang.version}</version>
         </dependency>
 
@@ -381,6 +377,18 @@
             <groupId>commons-pool</groupId>
             <artifactId>commons-pool</artifactId>
             <version>${commons.pool.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>commons-fileupload</groupId>
+            <artifactId>commons-fileupload</artifactId>
+            <version>${commons.fileupload.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>commons-io</groupId>
+            <artifactId>commons-io</artifactId>
+            <version>${commons.io.version}</version>
         </dependency>
 
         <dependency>
@@ -447,9 +455,33 @@
         <!-- REST Dependencies-->
 
         <dependency>
+            <groupId>com.sun.jersey.contribs</groupId>
+            <artifactId>jersey-multipart</artifactId>
+            <version>1.18.2</version>
+        </dependency>
+
+        <dependency>
             <groupId>com.sun.jersey</groupId>
             <artifactId>jersey-json</artifactId>
             <version>1.18.2</version>
+            <exclusions>
+                <exclusion>
+                    <groupId>org.codehaus.jackson</groupId>
+                    <artifactId>jackson-core-asl</artifactId>
+                </exclusion>
+                <exclusion>
+                    <groupId>org.codehaus.jackson</groupId>
+                    <artifactId>jackson-mapper-asl</artifactId>
+                </exclusion>
+                <exclusion>
+                    <groupId>org.codehaus.jackson</groupId>
+                    <artifactId>jackson-jaxrs</artifactId>
+                </exclusion>
+                <exclusion>
+                    <groupId>org.codehaus.jackson</groupId>
+                    <artifactId>jackson-xc</artifactId>
+                </exclusion>
+            </exclusions>
         </dependency>
         <dependency>
             <groupId>com.sun.jersey</groupId>
@@ -496,9 +528,34 @@
                     <groupId>org.springframework</groupId>
                     <artifactId>spring-context</artifactId>
                 </exclusion>
+                <exclusion>
+                    <groupId>org.springframework</groupId>
+                    <artifactId>spring-aop</artifactId>
+                </exclusion>
             </exclusions>
         </dependency>
 
+
+        <dependency>
+            <groupId>org.codehaus.jackson</groupId>
+            <artifactId>jackson-core-asl</artifactId>
+            <version>1.9.13</version>
+        </dependency>
+        <dependency>
+            <groupId>org.codehaus.jackson</groupId>
+            <artifactId>jackson-mapper-asl</artifactId>
+            <version>1.9.13</version>
+        </dependency>
+        <dependency>
+            <groupId>org.codehaus.jackson</groupId>
+            <artifactId>jackson-jaxrs</artifactId>
+            <version>1.9.13</version>
+        </dependency>
+        <dependency>
+            <groupId>org.codehaus.jackson</groupId>
+            <artifactId>jackson-xc</artifactId>
+            <version>1.9.13</version>
+        </dependency>
 
     </dependencies>
 </project>

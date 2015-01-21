@@ -3,7 +3,11 @@ package senbuyurken.entities;
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlTransient;
+import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 import java.io.Serializable;
 import java.util.Date;
 
@@ -15,6 +19,8 @@ import java.util.Date;
 @Entity
 @Table(name = "diaryentry")
 @XmlRootElement
+@XmlAccessorType(value = XmlAccessType.FIELD)
+//todo:XmlAccessorType kontrol edilecek
 public class DiaryEntry implements Serializable {
     private static final long serialVersionUID = 1L;
 
@@ -24,12 +30,15 @@ public class DiaryEntry implements Serializable {
     private Integer diary_entry_id;
 
 
-    @OneToOne(fetch = FetchType.LAZY)
+    @OneToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "fk_user_id")
+    @XmlTransient
+    //todo:XmlTransient kontrol edilecek
     private User user;
 
     @NotNull
     @Column(name = "entry_date")
+    @XmlJavaTypeAdapter(MyDateAdapter.class)
     private Date entry_date;
 
     @NotNull
@@ -81,4 +90,5 @@ public class DiaryEntry implements Serializable {
     public void setPhoto_url(String photo_url) {
         this.photo_url = photo_url;
     }
+
 }

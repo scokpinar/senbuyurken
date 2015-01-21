@@ -1,27 +1,47 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui:composition xmlns="http://www.w3.org/1999/xhtml"
                 xmlns:ui="http://java.sun.com/jsf/facelets"
-                xmlns:f="http://java.sun.com/jsf/core"
-                xmlns:h="http://java.sun.com/jsf/html"
                 template="/WEB-INF/templates/template.xhtml"
-                xmlns:p="http://primefaces.org/ui">
+        >
 
     <ui:define name="content">
 
-        <form action="rest/diaryEntryRest/createDiaryEntry" method="post">
+        <form action="rest/diaryEntryRest/createDiaryEntry" method="post" enctype="multipart/form-data">
+
+            <table>
+
+                <tr>
+                    <td>Image</td>
+                    <td><input type="file" name="imgFile" size="45"/>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td>Entry Image</td>
+                    <td><input name="entry_content" size="45"/>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td>
+                        <input type="submit" value="Upload"/>
+                    </td>
+                </tr>
+            </table>
+        </form>
+
+        <form action="rest/diaryEntryRest/listDiaryEntry/1" method="get">
+            <table>
 
 
-            <h:panelGrid columns="2" cellpadding="5">
+                <tr>
+                    <td>
+                        <input type="submit" value="List"/>
+                    </td>
+                </tr>
+            </table>
 
 
-                <h:outputLabel for="entry_content" value="Entry:"/>
-                <p:inputText id="entry_content" name="entry_content" required="true" label="entry"/>
-
-
-                <f:facet name="footer">
-                    <p:commandButton value="Save"/>
-                </f:facet>
-            </h:panelGrid>
         </form>
 
     </ui:define>
