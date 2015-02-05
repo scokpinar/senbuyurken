@@ -14,6 +14,6 @@ import java.util.List;
  */
 public interface DiaryEntryRepository extends JpaRepository<DiaryEntry, Integer> {
 
-    @Query("SELECT de FROM DiaryEntry de WHERE de.user.id = :user_id order by de.diary_entry_id desc")
-    List<DiaryEntry> findByUserId(@Param("user_id") Integer user_id);
+    @Query("SELECT de FROM DiaryEntry de WHERE de.user.email = :email order by de.diary_entry_id desc")
+    List<DiaryEntry> findByEmail(@Param("email") String email);
 }

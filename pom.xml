@@ -557,5 +557,18 @@
             <version>1.9.13</version>
         </dependency>
 
+        <dependency>
+            <groupId>com.google.api-client</groupId>
+            <artifactId>google-api-client</artifactId>
+            <version>1.18.0-rc</version>
+        </dependency>
+
+        <dependency>
+            <groupId>com.google.http-client</groupId>
+            <artifactId>google-http-client-gson</artifactId>
+            <version>1.18.0-rc</version>
+        </dependency>
+
+
     </dependencies>
 </project>
