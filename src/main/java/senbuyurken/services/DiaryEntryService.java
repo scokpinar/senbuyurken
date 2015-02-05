@@ -28,8 +28,8 @@ public class DiaryEntryService {
         return diaryEntryRepository.save(diaryEntry);
     }
 
-    public List<DiaryEntry> findByUserId(Integer user_id) {
-        return diaryEntryRepository.findByUserId(user_id);
+    public List<DiaryEntry> findByEmail(String email) {
+        return diaryEntryRepository.findByEmail(email);
     }
 
 }

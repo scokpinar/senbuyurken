@@ -28,4 +28,8 @@ public class BabyInfoService {
         return babyInfoRepository.save(babyInfo);
     }
 
+    public BabyInfo findByUser(Integer id) {
+        return babyInfoRepository.findByUser(id);
+    }
+
 }

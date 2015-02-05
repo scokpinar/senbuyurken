@@ -38,11 +38,6 @@ public class User implements Serializable {
     private String email;
 
     @NotNull
-    @Size(max = 128)
-    @Column(name = "password")
-    private String password;
-
-    @NotNull
     @Size(min = 1, max = 1)
     @Column(name = "active")
     private String active;
@@ -56,9 +51,8 @@ public class User implements Serializable {
     public User() {
     }
 
-    public User(String email, String password, String active, String userType) {
+    public User(String email, String active, String userType) {
         this.email = email;
-        this.password = password;
         this.active = active;
         this.user_type = userType;
     }
@@ -87,14 +81,6 @@ public class User implements Serializable {
         this.email = email;
     }
 
-    public String getPassword() {
-        return password;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
-    }
-
     public String getActive() {
         return active;
     }
@@ -116,7 +102,6 @@ public class User implements Serializable {
         return "User{" +
                 "user_id=" + user_id +
                 ", email='" + email + '\'' +
-                ", password='" + password + '\'' +
                 ", active='" + active + '\'' +
                 ", user_type='" + user_type + '\'' +
                 '}';

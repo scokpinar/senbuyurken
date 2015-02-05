@@ -38,7 +38,7 @@ public class DiaryEntry implements Serializable {
 
     @NotNull
     @Column(name = "entry_date")
-    @XmlJavaTypeAdapter(MyDateAdapter.class)
+    @XmlJavaTypeAdapter(MyDateAdapterLong.class)
     private Date entry_date;
 
     @NotNull

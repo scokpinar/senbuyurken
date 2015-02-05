@@ -3,7 +3,8 @@ package senbuyurken.entities;
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
-import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.*;
+import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 import java.io.Serializable;
 import java.util.Date;
 
@@ -15,6 +16,7 @@ import java.util.Date;
 @Entity
 @Table(name = "babyinformation")
 @XmlRootElement
+@XmlAccessorType(value = XmlAccessType.FIELD)
 public class BabyInfo implements Serializable {
     private static final long serialVersionUID = 1L;
 
@@ -25,6 +27,7 @@ public class BabyInfo implements Serializable {
 
 
     @OneToOne(fetch = FetchType.LAZY)
+    @XmlTransient
     @JoinColumn(name = "fk_user_id")
     private User user;
 
@@ -46,9 +49,10 @@ public class BabyInfo implements Serializable {
 
     @NotNull
     @Column(name = "birthDate")
+    @XmlJavaTypeAdapter(MyDateAdapterShort.class)
     private Date birthDate;
 
-    @Size(min = 5, max = 5)
+    @Size(max = 5)
     @Column(name = "birthHour")
     private String birthHour;
 
@@ -69,11 +73,12 @@ public class BabyInfo implements Serializable {
     private String pediatricianDoctor;
 
     @Column(name = "birthWeight")
-    private Integer birthWeight;
+    private int birthWeight = 0;
 
     @Column(name = "birthLength")
-    private Integer birthLength;
+    private int birthLength = 0;
 
+    @XmlElement(nillable = true)
     @Size(max = 256)
     @Column(name = "photoURL")
     private String photoURL;
@@ -167,7 +172,7 @@ public class BabyInfo implements Serializable {
         this.pediatricianDoctor = pediatricianDoctor;
     }
 
-    public Integer getBirthWeight() {
+    public int getBirthWeight() {
         return birthWeight;
     }
 
@@ -175,7 +180,7 @@ public class BabyInfo implements Serializable {
         this.birthWeight = birthWeight;
     }
 
-    public Integer getBirthLength() {
+    public int getBirthLength() {
         return birthLength;
     }
 

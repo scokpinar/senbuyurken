@@ -9,7 +9,7 @@ import java.util.Date;
 /**
  * Created by SametCokpinar on 14/01/15.
  */
-public class MyDateAdapter extends XmlAdapter<String, Date> {
+public class MyDateAdapterLong extends XmlAdapter<String, Date> {
 
     private static final FastDateFormat DATE_FORMATTER = FastDateFormat.getInstance("dd.MM.yyyy hh:mm");
 
