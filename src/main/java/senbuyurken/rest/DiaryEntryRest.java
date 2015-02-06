@@ -123,9 +123,9 @@ public class DiaryEntryRest {
 
 
     private void saveToAWSS3(InputStream inputStream, String itemName) {
-        String existingBucketName = "senbuyurken-photos";
-        String accessKey = "AKIAJZPJ7BZBDSLQQOOA";
-        String secretKey = "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";
+        String existingBucketName = "";
+        String accessKey = "";
+        String secretKey = "";
 
         AmazonS3 s3Client = new AmazonS3Client(new BasicAWSCredentials(accessKey, secretKey));
 
