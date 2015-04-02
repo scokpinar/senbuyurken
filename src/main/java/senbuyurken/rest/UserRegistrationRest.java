@@ -25,7 +25,7 @@ public class UserRegistrationRest {
 
     @GET
     @Path("/checkURRService")
-    @Produces({MediaType.APPLICATION_JSON})
+    @Produces({MediaType.APPLICATION_JSON + ";charset=utf-8"})
     public Response checkRestService() {
         JSONResult result = new JSONResult(true);
         System.out.println("Rest URR working");

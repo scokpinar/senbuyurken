@@ -38,15 +38,13 @@ public class UserController {
 
     }
 
-    public void setUsers(List<User> users) {
-        this.users = users;
+    public List<User> getUsers() {
+        users = userService.findAllUsers();
+        return users;
     }
 
-    public List<User> getUsers() {
-        if (users == null) {
-            users = userService.findAllUsers();
-        }
-        return users;
+    public void setUsers(List<User> users) {
+        this.users = users;
     }
 
     public User getUser() {
