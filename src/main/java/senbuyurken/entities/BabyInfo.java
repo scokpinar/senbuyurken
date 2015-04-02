@@ -41,7 +41,6 @@ public class BabyInfo implements Serializable {
     @Column(name = "surname")
     private String surname;
 
-
     @NotNull
     @Size(min = 1, max = 1)
     @Column(name = "gender")

@@ -50,7 +50,6 @@ public class DiaryEntry implements Serializable {
     @Column(name = "photo_url")
     private String photo_url;
 
-
     public Integer getDiary_entry_id() {
         return diary_entry_id;
     }

@@ -33,7 +33,6 @@ public class ParentInfoRest {
     @Autowired
     private ParentInfoService parentInfoService;
 
-
     @POST
     @Path("/createParentInfo")
     @Produces({MediaType.APPLICATION_JSON})

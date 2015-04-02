@@ -26,7 +26,6 @@ public class UserRegistrationRest {
     @Autowired
     private UserService userService;
 
-
     @POST
     @Path("/checkURRService")
     @Produces({MediaType.APPLICATION_JSON})
@@ -35,7 +34,6 @@ public class UserRegistrationRest {
         System.out.println("Rest URR working");
         return Response.status(200).entity(result).build();
     }
-
 
     @POST
     @Path("/createUser")
@@ -55,7 +53,6 @@ public class UserRegistrationRest {
         }
         return Response.status(200).entity(result).build();
     }
-
 
     public UserService getUserService() {
         return userService;

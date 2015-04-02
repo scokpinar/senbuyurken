@@ -27,13 +27,11 @@ import java.util.Date;
 @Path("/babyRegistrationRest")
 public class BabyInfoRest {
 
-
     @Autowired
     private UserService userService;
 
     @Autowired
     private BabyInfoService babyInfoService;
-
 
     @POST
     @Path("/createBabyInfo")

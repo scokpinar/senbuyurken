@@ -23,8 +23,8 @@ import java.io.Serializable;
 })
 public class User implements Serializable {
     private static final long serialVersionUID = 1L;
-    @Id
 
+    @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "user_id")
     private Integer user_id;
@@ -106,6 +106,5 @@ public class User implements Serializable {
                 ", user_type='" + user_type + '\'' +
                 '}';
     }
-
 
 }
