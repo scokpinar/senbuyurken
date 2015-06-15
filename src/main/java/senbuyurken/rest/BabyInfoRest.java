@@ -96,8 +96,8 @@ public class BabyInfoRest {
     ) {
 
         JSONResult result = new JSONResult(false);
-
         User user = userService.findByEmailAddress(email);
+        System.out.println("getBabyInfo" + "param --> email = " + email);
         BabyInfo babyInfo = babyInfoService.findByUser(user.getUserId());
         result.setResult(true);
         return Response.status(200).entity(babyInfo).build();
