@@ -32,6 +32,10 @@
             <props>
                 <prop key="hibernate.dialect">${hibernate.dialect}</prop>
                 <prop key="hibernate.hbm2ddl.auto">${hibernate.hbm2ddl.auto}</prop>
+                <prop key="hibernate.dbcp.initialSize">8</prop>
+                <prop key="hibernate.dbcp.maxActive">20</prop>
+                <prop key="hibernate.dbcp.maxIdle">20</prop>
+                <prop key="hibernate.dbcp.minIdle">0</prop>
             </props>
         </property>
         <property name="packagesToScan" value="senbuyurken.entities"></property>
@@ -45,6 +49,7 @@
         <property name="url" value="${jdbc.url}"></property>
         <property name="username" value="${jdbc.username}"></property>
         <property name="password" value="${jdbc.password}"></property>
+
     </bean>
 
 
