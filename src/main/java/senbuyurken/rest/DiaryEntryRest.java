@@ -48,15 +48,19 @@ import java.util.List;
 @Path("/diaryEntryRest")
 public class DiaryEntryRest {
 
+    String existingBucketName = System.getenv("BUCKET");
+    //String existingBucketName = "c79d97161ef8f66e341b304673c24ce7";
+    String accessKey = System.getenv("ACCESS_KEY_ID");
+    //String accessKey = "";
+    String secretKey = System.getenv("SECRET_ACCESS_KEY");
     @Autowired
     private DiaryEntryService diaryEntryService;
-
     @Autowired
     private UserService userService;
-
     private String userId;
+    //String secretKey = "";
 
-    @POST
+    @GET
     @Path("/checkDERService")
     @Produces({MediaType.APPLICATION_JSON})
     public Response checkRestService() {
@@ -158,15 +162,9 @@ public class DiaryEntryRest {
     }
 
     private void saveToAWSS3(InputStream inputStream, InputStream inputStream2, String itemName) {
-        //String existingBucketName = System.getenv("BUCKET");
-        String existingBucketName = "c79d97161ef8f66e341b304673c24ce7";
+
         String subFolderOriginal = userId + "/";
         String subFolderResized = subFolderOriginal + "resized/";
-        //String accessKey = System.getenv("ACCESS_KEY_ID");
-        String accessKey = "AKIAICCWZPHUQY2E652Q";
-
-        //String secretKey = System.getenv("SECRET_ACCESS_KEY");
-        String secretKey = "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";
 
         AmazonS3 s3Client = new AmazonS3Client(new BasicAWSCredentials(accessKey, secretKey));
 
@@ -222,16 +220,7 @@ public class DiaryEntryRest {
     }
 
     private InputStream loadFromAWSS3(String photoURL) {
-        //String existingBucketName = System.getenv("BUCKET");
-        String existingBucketName = "c79d97161ef8f66e341b304673c24ce7";
-
-
         String subFolder = userId + "/";
-        //String accessKey = System.getenv("ACCESS_KEY_ID");
-        String accessKey = "AKIAICCWZPHUQY2E652Q";
-
-        //String secretKey = System.getenv("SECRET_ACCESS_KEY");
-        String secretKey = "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";
 
         AmazonS3 s3Client = new AmazonS3Client(new BasicAWSCredentials(accessKey, secretKey));
 
