@@ -30,7 +30,7 @@
 
         <aspectj.version>1.6.8</aspectj.version>
         <cglib.version>2.2</cglib.version>
-        <mysql.version>5.1.32</mysql.version>
+        <mysql.version>5.1.35</mysql.version>
 
         <commons.dbcp.version>1.4</commons.dbcp.version>
         <commons.pool.version>1.6</commons.pool.version>
@@ -461,15 +461,15 @@
         <!-- REST Dependencies-->
 
         <dependency>
-            <groupId>com.sun.jersey.contribs</groupId>
-            <artifactId>jersey-multipart</artifactId>
-            <version>1.18.2</version>
+            <groupId>org.glassfish.jersey.media</groupId>
+            <artifactId>jersey-media-multipart</artifactId>
+            <version>2.13</version>
         </dependency>
 
         <dependency>
-            <groupId>com.sun.jersey</groupId>
-            <artifactId>jersey-json</artifactId>
-            <version>1.18.2</version>
+            <groupId>org.glassfish.jersey.media</groupId>
+            <artifactId>jersey-media-json-jackson</artifactId>
+            <version>2.22.1</version>
             <exclusions>
                 <exclusion>
                     <groupId>org.codehaus.jackson</groupId>
@@ -490,29 +490,42 @@
             </exclusions>
         </dependency>
         <dependency>
-            <groupId>com.sun.jersey</groupId>
-            <artifactId>jersey-core</artifactId>
-            <version>1.18.2</version>
+            <groupId>org.glassfish.jersey.core</groupId>
+            <artifactId>jersey-server</artifactId>
+            <version>2.22.1</version>
         </dependency>
         <dependency>
-            <groupId>com.sun.jersey</groupId>
+            <groupId>org.glassfish.jersey.core</groupId>
             <artifactId>jersey-client</artifactId>
-            <version>1.18.2</version>
+            <version>2.22.1</version>
         </dependency>
         <dependency>
-            <groupId>com.sun.jersey</groupId>
-            <artifactId>jersey-servlet</artifactId>
-            <version>1.18.2</version>
+            <groupId>org.glassfish.jersey.core</groupId>
+            <artifactId>jersey-common</artifactId>
+            <version>2.22.1</version>
+        </dependency>
+        <dependency>
+            <groupId>org.glassfish.jersey.containers</groupId>
+            <artifactId>jersey-container-servlet</artifactId>
+            <version>2.22.1</version>
         </dependency>
         <dependency>
             <groupId>javax.ws.rs</groupId>
             <artifactId>jsr311-api</artifactId>
             <version>1.1.1</version>
         </dependency>
+
+        <dependency>
+            <groupId>org.glassfish.jersey.ext</groupId>
+            <artifactId>jersey-spring3</artifactId>
+            <version>2.22.1</version>
+        </dependency>
+
+        <!-- because of Jersey 2.22
         <dependency>
             <groupId>com.sun.jersey.contribs</groupId>
             <artifactId>jersey-spring</artifactId>
-            <version>1.18.1</version>
+            <version>1.19</version>
             <exclusions>
                 <exclusion>
                     <groupId>org.springframework</groupId>
@@ -541,6 +554,7 @@
             </exclusions>
         </dependency>
 
+        -->
 
         <dependency>
             <groupId>org.codehaus.jackson</groupId>
@@ -590,6 +604,12 @@
             <groupId>com.amazonaws</groupId>
             <artifactId>aws-android-sdk-cognito</artifactId>
             <version>2.1.10</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.ogce</groupId>
+            <artifactId>xpp3</artifactId>
+            <version>1.1.6</version>
         </dependency>
 
 

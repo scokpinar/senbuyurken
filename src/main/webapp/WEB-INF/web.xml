@@ -51,13 +51,18 @@
 
     <servlet>
         <servlet-name>Rest Servlet</servlet-name>
-        <servlet-class>com.sun.jersey.spi.spring.container.servlet.SpringServlet</servlet-class>
+        <servlet-class>
+            org.glassfish.jersey.servlet.ServletContainer
+        </servlet-class>
+
         <init-param>
-            <param-name>com.sun.jersey.config.property.packages</param-name>
-            <param-value>senbuyurken.rest</param-value>
+            <param-name>jersey.config.server.provider.packages</param-name>
+            <param-value>senbuyurken.rest,senbuyurken.annotations</param-value>
         </init-param>
+
         <load-on-startup>1</load-on-startup>
     </servlet>
+
     <servlet-mapping>
         <servlet-name>Rest Servlet</servlet-name>
         <url-pattern>/rest/*</url-pattern>
