@@ -6,7 +6,6 @@ import com.amazonaws.auth.BasicAWSCredentials;
 import com.amazonaws.services.s3.AmazonS3;
 import com.amazonaws.services.s3.AmazonS3Client;
 import com.amazonaws.services.s3.model.*;
-import com.google.api.client.googleapis.auth.oauth2.GoogleIdToken;
 import org.apache.commons.fileupload.FileItem;
 import org.apache.commons.fileupload.FileItemFactory;
 import org.apache.commons.fileupload.FileUploadException;
@@ -18,8 +17,8 @@ import org.springframework.transaction.annotation.Transactional;
 import senbuyurken.entities.DiaryEntry;
 import senbuyurken.entities.JSONResult;
 import senbuyurken.services.DiaryEntryService;
-import senbuyurken.services.TokenChecker;
 import senbuyurken.services.UserService;
+import senbuyurken.utils.AppUtils;
 
 import javax.imageio.ImageIO;
 import javax.servlet.http.HttpServletRequest;
@@ -30,13 +29,11 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import java.awt.*;
 import java.awt.image.BufferedImage;
-import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.sql.Timestamp;
 import java.util.Date;
-import java.util.Iterator;
 import java.util.List;
 
 /**
@@ -48,21 +45,18 @@ import java.util.List;
 @Path("/diaryEntryRest")
 public class DiaryEntryRest {
 
-    String existingBucketName = System.getenv("BUCKET");
-    //String existingBucketName = "c79d97161ef8f66e341b304673c24ce7";
-    String accessKey = System.getenv("ACCESS_KEY_ID");
-    //String accessKey = "";
-    String secretKey = System.getenv("SECRET_ACCESS_KEY");
+
     @Autowired
     private DiaryEntryService diaryEntryService;
     @Autowired
     private UserService userService;
-    private String userId;
-    //String secretKey = "";
+
+    //private String userId;
+
 
     @GET
     @Path("/checkDERService")
-    @Produces({MediaType.APPLICATION_JSON})
+    @Produces({MediaType.APPLICATION_JSON + ";charset=utf-8"})
     public Response checkRestService() {
         System.out.println("Rest DER working");
         JSONResult result = new JSONResult(true);
@@ -83,6 +77,7 @@ public class DiaryEntryRest {
         String user = null;
         String token = null;
 
+
         DiaryEntry diaryEntry = new DiaryEntry();
 
         if (ServletFileUpload.isMultipartContent(request)) {
@@ -93,9 +88,8 @@ public class DiaryEntryRest {
                 final List items = fileUpload.parseRequest(request);
 
                 if (items != null) {
-                    final Iterator iter = items.iterator();
-                    while (iter.hasNext()) {
-                        final FileItem item = (FileItem) iter.next();
+                    for (Object item1 : items) {
+                        final FileItem item = (FileItem) item1;
                         if (item.isFormField() && "entry_text".equals(item.getFieldName())) {
                             diaryEntry.setEntry_content(item.getString());
                             diaryEntry.setEntry_date(new Timestamp(new Date().getTime()));
@@ -112,9 +106,11 @@ public class DiaryEntryRest {
                         }
                     }
 
-                    if (tokenChecker(user, token)) {
-                        saveToAWSS3(orginalIS, resizedIS, fileName);
+                    String userId = AppUtils.tokenChecker(user, token);
+                    if (userId != null) {
+                        saveToAWSS3(orginalIS, resizedIS, fileName, userId);
                         diaryEntryService.save(diaryEntry);
+                        result.setResult(true);
                     }
                 }
             } catch (FileUploadException fue) {
@@ -135,7 +131,7 @@ public class DiaryEntryRest {
 
         JSONResult result = new JSONResult(false);
 
-        if (tokenChecker(email, token)) {
+        if (AppUtils.tokenChecker(email, token) != null) {
             GenericEntity<List<DiaryEntry>> entries = new GenericEntity<List<DiaryEntry>>(diaryEntryService.findByEmail(email)) {
             };
             result.setResult(true);
@@ -153,30 +149,29 @@ public class DiaryEntryRest {
             @FormParam("photo_url") String photoURL) {
 
         JSONResult result = new JSONResult(false);
-
-        if (tokenChecker(email, token)) {
+        String userId = AppUtils.tokenChecker(email, token);
+        if (userId != null) {
             result.setResult(true);
-            return Response.status(200).entity(loadFromAWSS3(photoURL)).build();
+            //return Response.status(200).entity(loadFromAWSS3(photoURL, userId)).build();
         }
         return Response.status(200).entity(result).build();
     }
 
-    private void saveToAWSS3(InputStream inputStream, InputStream inputStream2, String itemName) {
+
+    private void saveToAWSS3(InputStream inputStream, InputStream inputStream2, String itemName, String userId) {
 
         String subFolderOriginal = userId + "/";
-        String subFolderResized = subFolderOriginal + "resized/";
 
-        AmazonS3 s3Client = new AmazonS3Client(new BasicAWSCredentials(accessKey, secretKey));
+        AmazonS3 s3Client = new AmazonS3Client(new BasicAWSCredentials(AppUtils.accessKey, AppUtils.secretKey));
 
         try {
             System.out.println("Uploading a new object to S3 from a file\n");
 
             BufferedImage originalImage;
             Image scaledImage;
-            InputStream fis = null;
 
             PutObjectRequest por4Original = new PutObjectRequest(
-                    existingBucketName, subFolderOriginal + itemName, inputStream, new ObjectMetadata());
+                    AppUtils.existingBucketName, subFolderOriginal + itemName, inputStream, new ObjectMetadata());
 
             por4Original.setCannedAcl(CannedAccessControlList.AuthenticatedRead);
             s3Client.putObject(por4Original);
@@ -190,14 +185,13 @@ public class DiaryEntryRest {
                 bGr.dispose();
                 ByteArrayOutputStream os = new ByteArrayOutputStream();
                 ImageIO.write(bImage, "jpeg", os);
-                fis = new ByteArrayInputStream(os.toByteArray());
             } catch (IOException e) {
                 e.printStackTrace();
             }
 
-            PutObjectRequest por4Resized = new PutObjectRequest(existingBucketName, subFolderResized + itemName, fis, new ObjectMetadata());
-            por4Resized.setCannedAcl(CannedAccessControlList.AuthenticatedRead);
-            s3Client.putObject(por4Resized);
+            //PutObjectRequest por4Resized = new PutObjectRequest(existingBucketName, subFolderResized + itemName, fis, new ObjectMetadata());
+            //por4Resized.setCannedAcl(CannedAccessControlList.AuthenticatedRead);
+            //s3Client.putObject(por4Resized);
 
         } catch (AmazonServiceException ase) {
             System.out.println("Caught an AmazonServiceException, which " +
@@ -219,16 +213,16 @@ public class DiaryEntryRest {
         }
     }
 
-    private InputStream loadFromAWSS3(String photoURL) {
+    private InputStream loadFromAWSS3(String photoURL, String userId) {
         String subFolder = userId + "/";
 
-        AmazonS3 s3Client = new AmazonS3Client(new BasicAWSCredentials(accessKey, secretKey));
+        AmazonS3 s3Client = new AmazonS3Client(new BasicAWSCredentials(AppUtils.accessKey, AppUtils.secretKey));
 
         try {
             System.out.println("Getting objects from S3 as stream\n");
 
             S3Object object = s3Client.getObject(new GetObjectRequest(
-                    existingBucketName, subFolder + "resized/" + photoURL));
+                    AppUtils.existingBucketName, subFolder + photoURL));
 
             return object.getObjectContent();
 
@@ -252,19 +246,6 @@ public class DiaryEntryRest {
         }
         return null;
     }
-
-
-    private boolean tokenChecker(String email, String token) {
-        TokenChecker ch = new TokenChecker(new String[]{email}, "345121036471-p2rragjceuga9g0vrf04e8ml7komc07m.apps.googleusercontent.com");
-        GoogleIdToken.Payload pl = ch.check(token);
-
-        if (pl != null && pl.getEmailVerified()) {
-            userId = (String) pl.get("sub");
-            return true;
-        }
-        return false;
-    }
-
 
     public DiaryEntryService getDiaryEntryService() {
         return diaryEntryService;
