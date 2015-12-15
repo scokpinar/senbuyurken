@@ -44,7 +44,7 @@ public class DiaryEntryRest {
 
     @POST
     @Path("/createDiaryEntry")
-    @Produces({MediaType.APPLICATION_JSON})
+    @Produces({MediaType.APPLICATION_JSON + ";charset=utf-8"})
     @Transactional
     public Response createDiaryEntryFromForm(
             @FormParam("un") String email,
