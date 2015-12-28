@@ -36,4 +36,8 @@ public class UserService {
     public Boolean checkUser(String email) {
         return userRepository.findByEmailAddress(email) == null;
     }
+
+    public void findUserCount4HerokuWake() {
+        userRepository.findUserCount4HerokuWake();
+    }
 }

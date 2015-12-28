@@ -470,7 +470,7 @@
             <groupId>org.glassfish.jersey.media</groupId>
             <artifactId>jersey-media-json-jackson</artifactId>
             <version>2.22.1</version>
-            <exclusions>
+            <!--<exclusions>
                 <exclusion>
                     <groupId>org.codehaus.jackson</groupId>
                     <artifactId>jackson-core-asl</artifactId>
@@ -487,7 +487,7 @@
                     <groupId>org.codehaus.jackson</groupId>
                     <artifactId>jackson-xc</artifactId>
                 </exclusion>
-            </exclusions>
+            </exclusions>  -->
         </dependency>
         <dependency>
             <groupId>org.glassfish.jersey.core</groupId>
@@ -509,6 +509,7 @@
             <artifactId>jersey-container-servlet</artifactId>
             <version>2.22.1</version>
         </dependency>
+
         <dependency>
             <groupId>javax.ws.rs</groupId>
             <artifactId>jsr311-api</artifactId>
@@ -556,7 +557,7 @@
 
         -->
 
-        <dependency>
+        <!--<dependency>
             <groupId>org.codehaus.jackson</groupId>
             <artifactId>jackson-core-asl</artifactId>
             <version>1.9.13</version>
@@ -566,6 +567,7 @@
             <artifactId>jackson-mapper-asl</artifactId>
             <version>1.9.13</version>
         </dependency>
+
         <dependency>
             <groupId>org.codehaus.jackson</groupId>
             <artifactId>jackson-jaxrs</artifactId>
@@ -575,7 +577,7 @@
             <groupId>org.codehaus.jackson</groupId>
             <artifactId>jackson-xc</artifactId>
             <version>1.9.13</version>
-        </dependency>
+        </dependency> -->
 
         <dependency>
             <groupId>com.google.api-client</groupId>
@@ -611,7 +613,6 @@
             <artifactId>xpp3</artifactId>
             <version>1.1.6</version>
         </dependency>
-
 
     </dependencies>
 </project>

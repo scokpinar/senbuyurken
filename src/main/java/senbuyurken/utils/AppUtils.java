@@ -1,7 +1,6 @@
 package senbuyurken.utils;
 
 import com.google.api.client.googleapis.auth.oauth2.GoogleIdToken;
-import senbuyurken.services.TokenChecker;
 
 /**
  * Created by SametCokpinar on 10/12/15.

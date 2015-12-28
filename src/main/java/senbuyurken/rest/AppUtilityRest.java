@@ -31,6 +31,18 @@ public class AppUtilityRest {
     @Autowired
     private UserService userService;
 
+
+    @GET
+    @Path("/wake")
+    @Produces({"application/json"})
+    public Response wake() {
+        JSONResult result = new JSONResult(true);
+        System.out.println("Wake Called");
+        userService.findUserCount4HerokuWake();
+        return Response.status(200).entity(result).build();
+    }
+
+
     /**
      * GZIP Testing purposes
      *

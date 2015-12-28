@@ -18,4 +18,7 @@ public interface UserRepository extends JpaRepository<User, Integer> {
     @Query("SELECT u FROM User u WHERE u.email = :email")
     User findByEmailAddress(@Param("email") String email);
 
+    @Query("SELECT count(u.id) FROM User u")
+    void findUserCount4HerokuWake();
+
 }
