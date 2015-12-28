@@ -510,11 +510,11 @@
             <version>2.22.1</version>
         </dependency>
 
-        <dependency>
+        <!--<dependency>
             <groupId>javax.ws.rs</groupId>
             <artifactId>jsr311-api</artifactId>
             <version>1.1.1</version>
-        </dependency>
+        </dependency> -->
 
         <dependency>
             <groupId>org.glassfish.jersey.ext</groupId>
@@ -612,6 +612,12 @@
             <groupId>org.ogce</groupId>
             <artifactId>xpp3</artifactId>
             <version>1.1.6</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.jhades</groupId>
+            <artifactId>jhades</artifactId>
+            <version>1.0.4</version>
         </dependency>
 
     </dependencies>
