@@ -13,7 +13,7 @@ import javax.ws.rs.*;
 import javax.ws.rs.core.GenericEntity;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
-import java.sql.Timestamp;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -57,7 +57,7 @@ public class DiaryEntryRest {
         DiaryEntry diaryEntry = new DiaryEntry();
 
         diaryEntry.setEntry_content(entry_text);
-        diaryEntry.setEntry_date(new Timestamp(Long.parseLong(entry_date)));
+        diaryEntry.setEntry_date(new Date(Long.parseLong(entry_date)));
         diaryEntry.setPhoto_url(image);
         diaryEntry.setUser(userService.findByEmailAddress(email));
 
