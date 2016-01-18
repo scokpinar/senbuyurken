@@ -13,7 +13,7 @@ import javax.ws.rs.*;
 import javax.ws.rs.core.GenericEntity;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
-import java.util.Date;
+import java.util.Calendar;
 import java.util.List;
 
 /**
@@ -57,7 +57,9 @@ public class DiaryEntryRest {
         DiaryEntry diaryEntry = new DiaryEntry();
 
         diaryEntry.setEntry_content(entry_text);
-        diaryEntry.setEntry_date(new Date(Long.parseLong(entry_date)));
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTimeInMillis(Long.parseLong(entry_date));
+        diaryEntry.setEntry_date(calendar.getTime());
         diaryEntry.setPhoto_url(image);
         diaryEntry.setUser(userService.findByEmailAddress(email));
 
