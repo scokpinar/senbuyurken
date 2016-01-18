@@ -60,8 +60,8 @@ public class DiaryEntryRest {
 
         diaryEntry.setEntry_content(entry_text);
         Calendar calendar = Calendar.getInstance();
-        calendar.setTimeInMillis(Long.parseLong(entry_date));
         calendar.setTimeZone(TimeZone.getTimeZone(time_zone));
+        calendar.setTimeInMillis(Long.parseLong(entry_date));
         diaryEntry.setEntry_date(calendar.getTime());
         diaryEntry.setPhoto_url(image);
         diaryEntry.setUser(userService.findByEmailAddress(email));
