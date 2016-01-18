@@ -14,7 +14,6 @@ import javax.ws.rs.core.GenericEntity;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import java.sql.Timestamp;
-import java.util.Date;
 import java.util.List;
 
 /**
@@ -50,6 +49,7 @@ public class DiaryEntryRest {
             @FormParam("un") String email,
             @FormParam("t") String token,
             @FormParam("entry_text") String entry_text,
+            @FormParam("entry_date") String entry_date,
             @FormParam("image") String image) {
 
         JSONResult result = new JSONResult(false);
@@ -57,7 +57,7 @@ public class DiaryEntryRest {
         DiaryEntry diaryEntry = new DiaryEntry();
 
         diaryEntry.setEntry_content(entry_text);
-        diaryEntry.setEntry_date(new Timestamp(new Date().getTime()));
+        diaryEntry.setEntry_date(new Timestamp(Long.parseLong(entry_date)));
         diaryEntry.setPhoto_url(image);
         diaryEntry.setUser(userService.findByEmailAddress(email));
 
