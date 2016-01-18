@@ -15,6 +15,7 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import java.util.Calendar;
 import java.util.List;
+import java.util.TimeZone;
 
 /**
  * User: SametCokpinar
@@ -50,6 +51,7 @@ public class DiaryEntryRest {
             @FormParam("t") String token,
             @FormParam("entry_text") String entry_text,
             @FormParam("entry_date") String entry_date,
+            @FormParam("time_zone") String time_zone,
             @FormParam("image") String image) {
 
         JSONResult result = new JSONResult(false);
@@ -59,6 +61,7 @@ public class DiaryEntryRest {
         diaryEntry.setEntry_content(entry_text);
         Calendar calendar = Calendar.getInstance();
         calendar.setTimeInMillis(Long.parseLong(entry_date));
+        calendar.setTimeZone(TimeZone.getTimeZone(time_zone));
         diaryEntry.setEntry_date(calendar.getTime());
         diaryEntry.setPhoto_url(image);
         diaryEntry.setUser(userService.findByEmailAddress(email));
