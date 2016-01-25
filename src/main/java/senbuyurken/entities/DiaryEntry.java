@@ -22,13 +22,13 @@ import java.util.Date;
 @XmlAccessorType(value = XmlAccessType.FIELD)
 //todo:XmlAccessorType kontrol edilecek
 public class DiaryEntry implements Serializable {
+
     private static final long serialVersionUID = 1L;
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "diary_entry_id")
     private Integer diary_entry_id;
-
 
     @OneToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "fk_user_id")
@@ -40,6 +40,11 @@ public class DiaryEntry implements Serializable {
     @Column(name = "entry_date")
     @XmlJavaTypeAdapter(MyDateAdapterLong.class)
     private Date entry_date;
+
+    @NotNull
+    @Size(max = 256)
+    @Column(name = "entry_title")
+    private String entry_title;
 
     @NotNull
     @Size(max = 1024)
@@ -80,6 +85,14 @@ public class DiaryEntry implements Serializable {
 
     public void setEntry_content(String entry_content) {
         this.entry_content = entry_content;
+    }
+
+    public String getEntry_title() {
+        return entry_title;
+    }
+
+    public void setEntry_title(String entry_title) {
+        this.entry_title = entry_title;
     }
 
     public String getPhoto_url() {
