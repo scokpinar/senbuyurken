@@ -49,6 +49,7 @@ public class DiaryEntryRest {
     public Response createDiaryEntryFromForm(
             @FormParam("un") String email,
             @FormParam("t") String token,
+            @FormParam("entry_title") String entry_title,
             @FormParam("entry_text") String entry_text,
             @FormParam("entry_date") String entry_date,
             @FormParam("time_zone") String time_zone,
@@ -58,11 +59,11 @@ public class DiaryEntryRest {
 
         DiaryEntry diaryEntry = new DiaryEntry();
 
+        diaryEntry.setEntry_title(entry_title);
         diaryEntry.setEntry_content(entry_text);
         Calendar calendar = Calendar.getInstance();
         calendar.setTimeZone(TimeZone.getTimeZone(time_zone));
         calendar.setTimeInMillis(Long.parseLong(entry_date));
-        System.out.println("Samet Calendar = " + calendar.toString());
         diaryEntry.setEntry_date(calendar.getTime());
         diaryEntry.setPhoto_url(image);
         diaryEntry.setUser(userService.findByEmailAddress(email));
