@@ -11,7 +11,7 @@ import java.util.Date;
  */
 public class MyDateAdapterLong extends XmlAdapter<String, Date> {
 
-    private static final FastDateFormat DATE_FORMATTER = FastDateFormat.getInstance("dd.MM.yyyy hh:mm");
+    private static final FastDateFormat DATE_FORMATTER = FastDateFormat.getInstance("dd.MM.yyyy HH:mm");
 
     @Override
     public String marshal(Date v) throws Exception {
