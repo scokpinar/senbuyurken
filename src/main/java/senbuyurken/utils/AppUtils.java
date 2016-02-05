@@ -19,6 +19,9 @@ public class AppUtils {
         if (pl != null && pl.getEmailVerified()) {
             userId = (String) pl.get("sub");
         }
+
+        System.out.println("Google UserId = " + userId);
+
         return userId;
     }
 
