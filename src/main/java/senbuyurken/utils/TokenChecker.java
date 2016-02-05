@@ -21,7 +21,7 @@ public class TokenChecker {
     private final String mAudience;
     private final GoogleIdTokenVerifier mVerifier;
     private final JsonFactory mJFactory;
-    private String mProblem = "Verification failed. (Time-out?)";
+    private String mProblem = "";
 
     public TokenChecker(String[] clientIDs, String audience) {
         mClientIDs = Arrays.asList(clientIDs);
@@ -49,6 +49,7 @@ public class TokenChecker {
         } catch (IOException e) {
             mProblem = "Network problem: " + e.getLocalizedMessage();
         }
+        System.out.println("Google Verification Problem = " + mProblem);
         return payload;
     }
 
