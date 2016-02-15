@@ -31,7 +31,6 @@ public class AppUtilityRest {
     @Autowired
     private UserService userService;
 
-
     @GET
     @Path("/wake")
     @Produces({"application/json"})
@@ -41,7 +40,6 @@ public class AppUtilityRest {
         userService.findUserCount4HerokuWake();
         return Response.status(200).entity(result).build();
     }
-
 
     /**
      * GZIP Testing purposes
@@ -60,15 +58,27 @@ public class AppUtilityRest {
         return Response.status(200).entity(entries).build();
     }
 
+    @POST
+    @Path("/googleTokenValidation")
+    @Produces({MediaType.APPLICATION_JSON})
+    public Response getGoogleTokenValidation(
+            @FormParam("userName") String userName,
+            @FormParam("token") String token) {
+
+        JSONResult result = new JSONResult(false);
+        result.setResult(AppUtils.tokenValidator(token));
+        return Response.status(200).entity(result).build();
+    }
 
     @POST
     @Path("/getToken")
     @Produces({"application/json"})
     public Response getAWSToken(
-            @FormParam("un") String email,
-            @FormParam("t") String token) {
+            @FormParam("userName") String userName,
+            @FormParam("token") String token,
+            @FormParam("validUser") String validUser) {
 
-        if (AppUtils.tokenChecker(email, token) != null) {
+        if (AppUtils.tokenValidator(token) && validUser.equals("true")) {
             AWSSecurityTokenServiceClient stsClient = new AWSSecurityTokenServiceClient(new BasicAWSCredentials(AppUtils.accessKey, AppUtils.secretKey));
             stsClient.setEndpoint("sts.eu-west-1.amazonaws.com");
 
@@ -77,7 +87,6 @@ public class AppUtilityRest {
 
             GetSessionTokenResult awsToken = stsClient.getSessionToken();
             return Response.status(200).entity(awsToken).build();
-
         }
         return Response.status(200).entity(null).build();
     }

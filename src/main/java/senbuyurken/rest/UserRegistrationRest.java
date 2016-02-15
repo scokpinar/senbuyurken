@@ -37,13 +37,13 @@ public class UserRegistrationRest {
     @Produces({MediaType.APPLICATION_JSON})
     @Transactional
     public Response createUserFromForm(
-            @FormParam("email") String email,
+            @FormParam("userName") String userName,
             @FormParam("active") String active,
-            @FormParam("user_type") String user_type
+            @FormParam("userType") String userType
     ) {
         JSONResult result = new JSONResult(false);
-        if (userService.checkUser(email)) {
-            User user = new User(email, active, user_type);
+        if (userService.checkUser(userName)) {
+            User user = new User(userName, active, userType);
             User u = userService.save(user);
             result.setResult(true);
             return Response.status(200).entity(result).build();

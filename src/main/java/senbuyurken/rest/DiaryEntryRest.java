@@ -26,12 +26,10 @@ import java.util.TimeZone;
 @Path("/diaryEntryRest")
 public class DiaryEntryRest {
 
-
     @Autowired
     private DiaryEntryService diaryEntryService;
     @Autowired
     private UserService userService;
-
 
     @GET
     @Path("/checkDERService")
@@ -47,29 +45,27 @@ public class DiaryEntryRest {
     @Produces({MediaType.APPLICATION_JSON + ";charset=utf-8"})
     @Transactional
     public Response createDiaryEntryFromForm(
-            @FormParam("un") String email,
-            @FormParam("t") String token,
-            @FormParam("entry_title") String entry_title,
-            @FormParam("entry_text") String entry_text,
-            @FormParam("entry_date") String entry_date,
-            @FormParam("time_zone") String time_zone,
-            @FormParam("image") String image) {
+            @FormParam("userName") String userName,
+            @FormParam("token") String token,
+            @FormParam("validUser") String validUser,
+            @FormParam("entryTitle") String entryTitle,
+            @FormParam("entryText") String entryText,
+            @FormParam("entryDate") String entryDate,
+            @FormParam("timeZone") String timeZone,
+            @FormParam("photoURL") String photoURL) {
 
         JSONResult result = new JSONResult(false);
 
-        DiaryEntry diaryEntry = new DiaryEntry();
-
-        diaryEntry.setEntry_title(entry_title);
-        diaryEntry.setEntry_content(entry_text);
-        Calendar calendar = Calendar.getInstance();
-        calendar.setTimeZone(TimeZone.getTimeZone(time_zone));
-        calendar.setTimeInMillis(Long.parseLong(entry_date));
-        diaryEntry.setEntry_date(calendar.getTime());
-        diaryEntry.setPhoto_url(image);
-        diaryEntry.setUser(userService.findByEmailAddress(email));
-
-        String userId = AppUtils.tokenChecker(email, token);
-        if (userId != null) {
+        if (AppUtils.tokenValidator(token) && validUser.equals("true")) {
+            DiaryEntry diaryEntry = new DiaryEntry();
+            diaryEntry.setEntry_title(entryTitle);
+            diaryEntry.setEntry_content(entryText);
+            Calendar calendar = Calendar.getInstance();
+            calendar.setTimeZone(TimeZone.getTimeZone(timeZone));
+            calendar.setTimeInMillis(Long.parseLong(entryDate));
+            diaryEntry.setEntry_date(calendar.getTime());
+            diaryEntry.setPhoto_url(photoURL);
+            diaryEntry.setUser(userService.findByEmailAddress(userName));
             diaryEntryService.save(diaryEntry);
             result.setResult(true);
         }
@@ -80,13 +76,13 @@ public class DiaryEntryRest {
     @Path("/listDiaryEntry")
     @Produces({MediaType.APPLICATION_JSON + ";charset=utf-8"})
     public Response findByUserId(
-            @FormParam("un") String email,
-            @FormParam("t") String token) {
+            @FormParam("userName") String userName,
+            @FormParam("token") String token,
+            @FormParam("validUser") String validUser) {
 
         JSONResult result = new JSONResult(false);
-
-        if (AppUtils.tokenChecker(email, token) != null) {
-            GenericEntity<List<DiaryEntry>> entries = new GenericEntity<List<DiaryEntry>>(diaryEntryService.findByEmail(email)) {
+        if (AppUtils.tokenValidator(token) && validUser.equals("true")) {
+            GenericEntity<List<DiaryEntry>> entries = new GenericEntity<List<DiaryEntry>>(diaryEntryService.findByEmail(userName)) {
             };
             result.setResult(true);
             return Response.status(200).entity(entries).build();
@@ -94,35 +90,4 @@ public class DiaryEntryRest {
         return Response.status(200).entity(result).build();
     }
 
-    @POST
-    @Path("/getDiaryEntryImage")
-    @Produces({MediaType.APPLICATION_OCTET_STREAM})
-    public Response getImagesByUserId(
-            @FormParam("un") String email,
-            @FormParam("t") String token,
-            @FormParam("photo_url") String photoURL) {
-
-        JSONResult result = new JSONResult(false);
-        String userId = AppUtils.tokenChecker(email, token);
-        if (userId != null) {
-            result.setResult(true);
-        }
-        return Response.status(200).entity(result).build();
-    }
-
-    public DiaryEntryService getDiaryEntryService() {
-        return diaryEntryService;
-    }
-
-    public void setDiaryEntryService(DiaryEntryService diaryEntryService) {
-        this.diaryEntryService = diaryEntryService;
-    }
-
-    public UserService getUserService() {
-        return userService;
-    }
-
-    public void setUserService(UserService userService) {
-        this.userService = userService;
-    }
 }

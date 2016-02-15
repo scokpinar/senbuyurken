@@ -1,28 +1,20 @@
 package senbuyurken.utils;
 
-import com.google.api.client.googleapis.auth.oauth2.GoogleIdToken;
-
 /**
  * Created by SametCokpinar on 10/12/15.
  */
 public class AppUtils {
 
-    public static String existingBucketName = System.getenv("BUCKET");
-    public static String accessKey = System.getenv("ACCESS_KEY_ID");
-    public static String secretKey = System.getenv("SECRET_ACCESS_KEY");
+    public static final String existingBucketName = System.getenv("BUCKET");
+    public static final String accessKey = System.getenv("ACCESS_KEY_ID");
+    public static final String secretKey = System.getenv("SECRET_ACCESS_KEY");
 
-    public static String tokenChecker(String email, String token) {
-        TokenChecker ch = new TokenChecker(new String[]{email}, "345121036471-p2rragjceuga9g0vrf04e8ml7komc07m.apps.googleusercontent.com");
-        GoogleIdToken.Payload pl = ch.check(token);
-        String userId = null;
+    public static final String GOOGLE_CLIENT_ID = "345121036471-p2rragjceuga9g0vrf04e8ml7komc07m.apps.googleusercontent.com";
+    public static final String GOOGLE_APP_ID = "345121036471-er4m3a2bn1f2itqio1c8ije49oahfpu3.apps.googleusercontent.com";
 
-        if (pl != null && pl.getEmailVerified()) {
-            userId = (String) pl.get("sub");
-        }
 
-        System.out.println("Google UserId = " + userId);
-
-        return userId;
+    public static Boolean tokenValidator(String token) {
+        TokenValidator ch = new TokenValidator();
+        return ch.validate(token);
     }
-
 }
