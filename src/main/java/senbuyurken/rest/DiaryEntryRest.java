@@ -95,11 +95,12 @@ public class DiaryEntryRest {
     @Produces({MediaType.APPLICATION_JSON + ";charset=utf-8"})
     public Response deleteById(
             @FormParam("entryId") String entryId,
-            @FormParam("token") String token,
+            //@FormParam("token") String token,
             @FormParam("validUser") String validUser) {
 
         JSONResult result = new JSONResult(false);
-        if (AppUtils.tokenValidator(token) && validUser.equals("true")) {
+        //if (AppUtils.tokenValidator(token) && validUser.equals("true")) {
+        if (validUser.equals("true")) {
             diaryEntryService.delete(Integer.parseInt(entryId));
             result.setResult(true);
             return Response.status(200).entity(result).build();
