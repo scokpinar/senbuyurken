@@ -32,4 +32,8 @@ public class DiaryEntryService {
         return diaryEntryRepository.findByEmail(email);
     }
 
+    public void delete(Integer entryId) {
+        diaryEntryRepository.delete(entryId);
+    }
+
 }
