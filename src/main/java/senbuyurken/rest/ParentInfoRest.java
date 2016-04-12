@@ -41,8 +41,10 @@ public class ParentInfoRest {
             @FormParam("email") String email,
             @FormParam("mother_name") String mother_name,
             @FormParam("mother_surname") String mother_surname,
+            @FormParam("mother_photo") String mother_photo,
             @FormParam("father_name") String father_name,
             @FormParam("father_surname") String father_surname,
+            @FormParam("father_photo") String father_photo,
             @FormParam("wedding_anniversary") String wedding_anniversary
     ) {
 
@@ -59,6 +61,8 @@ public class ParentInfoRest {
             parentInfo.setMotherSurname(mother_surname);
             parentInfo.setFatherName(father_name);
             parentInfo.setFatherSurname(father_surname);
+            parentInfo.setPhotoURLMother(mother_photo);
+            parentInfo.setPhotoURLFather(father_photo);
             try {
                 DateFormat format = new SimpleDateFormat("dd.MM.yyyy");
                 Date date = format.parse(wedding_anniversary);
@@ -66,8 +70,6 @@ public class ParentInfoRest {
             } catch (ParseException e) {
                 e.printStackTrace();
             }
-            //parentInfo.setPhotoURLMother(url_1);
-            //parentInfo.setPhotoURLFather(url_1);
             parentInfoService.save(parentInfo);
 
             result.setResult(true);
