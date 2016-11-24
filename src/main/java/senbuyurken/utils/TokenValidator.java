@@ -21,7 +21,6 @@ public class TokenValidator {
     private String mProblem = "Verification failed. (Time-out?)";
 
     public TokenValidator() {
-
     }
 
     public Boolean validate(String tokenString) {
