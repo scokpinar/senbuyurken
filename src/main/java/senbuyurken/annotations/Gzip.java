@@ -7,6 +7,7 @@ import java.lang.annotation.RetentionPolicy;
 /**
  * Created by SametCokpinar on 07/12/15.
  */
+
 @NameBinding
 @Retention(RetentionPolicy.RUNTIME)
 public @interface Gzip {

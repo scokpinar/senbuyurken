@@ -12,6 +12,7 @@ import java.util.zip.GZIPOutputStream;
 /**
  * Created by SametCokpinar on 07/12/15.
  */
+
 @Provider
 @Gzip
 public class GZIPWriterInterceptor implements WriterInterceptor {
@@ -31,5 +32,4 @@ public class GZIPWriterInterceptor implements WriterInterceptor {
         context.setOutputStream(new GZIPOutputStream(outputStream));
         context.proceed();
     }
-
 }

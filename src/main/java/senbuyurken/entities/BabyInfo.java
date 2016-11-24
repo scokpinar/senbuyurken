@@ -13,18 +13,19 @@ import java.util.Date;
  * Date: 17/12/14
  * Time: 22:46
  */
+
 @Entity
 @Table(name = "babyinformation")
 @XmlRootElement
 @XmlAccessorType(value = XmlAccessType.FIELD)
 public class BabyInfo implements Serializable {
+
     private static final long serialVersionUID = 1L;
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "baby_info_id")
     private Integer babyInfoId;
-
 
     @OneToOne(fetch = FetchType.LAZY)
     @XmlTransient
@@ -81,7 +82,6 @@ public class BabyInfo implements Serializable {
     @Size(max = 256)
     @Column(name = "photoURL")
     private String photoURL;
-
 
     public Integer getBabyInfoId() {
         return babyInfoId;
